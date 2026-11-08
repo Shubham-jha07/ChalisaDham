@@ -1,0 +1,2 @@
+import {chalisas} from '@/data/chalisas';
+export default function ContentNotice(){const published=chalisas.filter(c=>c.status==='verified').length;const pending=chalisas.length-published;return <section className="wrap notice" lang="en"><b>Read with devotion. Published with care.</b><p>{published} complete Chalisas, ready to read.{pending>0&&` ${pending} more texts are being reviewed.`}</p></section>;}

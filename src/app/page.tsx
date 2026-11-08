@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import Link from 'next/link';
+import Library from '@/components/Library';
+import HeroScene from '@/components/HeroScene';
+import ContentNotice from '@/components/ContentNotice';
+export const metadata:Metadata={alternates:{canonical:'/'}};
+export default function Home(){return <><section className="hero wrap"><div className="hero-copy"><div className="hero-tag">✦ ANCIENT WISDOM. YOUR EVERYDAY SPACE.</div><h1>थोड़ा ठहरें।<br/>थोड़ा <em>जुड़ें।</em></h1><p className="hero-hindi">भागती दुनिया में, भक्ति का एक पल।</p><p className="hero-description">Discover your daily dose of devotion. A thoughtful collection of Hindi Chalisas, always close to you.</p><div className="hero-actions"><Link className="button" href="/#library">अपनी चालीसा खोजें ↗</Link><span className="small-note">दिल से पढ़ें। सुकून से जुड़ें।</span></div><div className="hero-stats"><span><b>10</b> चालीसा पृष्ठ</span><i/><span><b>हिंदी</b> में, आपके लिए</span><i/><span><b>सदा</b> आपके साथ</span></div></div><HeroScene/></section><div className="belief-strip"><span>✦ सरल अनुभव</span><span>✦ हिंदी में भक्ति</span><span>✦ अपनी गति से पढ़ें</span><span>✦ कहीं भी, कभी भी</span></div><Library/><section className="wrap mindful" data-reveal><span aria-hidden="true">❋</span><div><span className="eyebrow">YOUR DAILY PAUSE</span><h2>सुकून के लिए, बस एक पल काफ़ी है।</h2><p>अपनी पसंद का पृष्ठ सहेजें और जब मन करे, लौट आएँ।</p></div><Link href="/#bookmarks">मेरा संग्रह देखें ↗</Link></section><ContentNotice/></>}
