@@ -1,7 +1,7 @@
 'use client';
-import {useEffect,useMemo,useState} from 'react';
+import {useEffect,useState} from 'react';
 import type {Chalisa} from '@/data/chalisas';
-import {contentName,introduction,romanize,sectionName} from '@/lib/language';
+import {contentName,introduction,prayerText} from '@/lib/language';
 import {useLanguage} from './Language';
 import {BOOKMARK_KEY,readBookmarks} from './Library';
 
@@ -15,9 +15,9 @@ export default function Reader({item}:{item:Chalisa}) {
     try {const preference=localStorage.getItem('chalisadham-reader-layout');if(preference==='paired'||preference==='stacked')setLayout(preference);}catch{}
     window.addEventListener('storage',sync);return()=>window.removeEventListener('storage',sync);
   },[item.slug]);
-  const sections=useMemo(()=>item.sections.map(s=>({...s,verses:language==='hi'?s.verses:s.verses.map(romanize)})),[item.sections,language]);
+  const sections=item.sections;
   const verified=item.status==='verified'&&item.sections.length>0&&item.sources.length>0;
-  const text=verified?`${contentName(item,language)}\n\n${sections.map(s=>`${sectionName(s.heading,language)}\n${s.verses.join('\n\n')}`).join('\n\n')}`:'';
+  const text=verified?prayerText(item):'';
   const feedback:Record<Message,string>={
     '':'',copied:t('पाठ कॉपी हो गया।','Text copied.'),copyFailed:t('पाठ कॉपी नहीं हुआ। कृपया पाठ चुनकर स्वयं कॉपी करें।','Could not copy. Please select the text and copy it manually.'),
     linkCopied:t('पृष्ठ का लिंक कॉपी हो गया।','Page link copied.'),shareFailed:t('साझा नहीं हो सका। कृपया ब्राउज़र से लिंक कॉपी करें।','Could not share. Please copy the link from your browser.'),
@@ -36,11 +36,10 @@ export default function Reader({item}:{item:Chalisa}) {
       <div><button onClick={copy} disabled={!verified}>{t('कॉपी करें','Copy')}</button><button onClick={share}>{t('साझा करें ↗','Share ↗')}</button><button aria-pressed={saved} onClick={bookmark}>{saved?t('♥ सहेजा गया','♥ Saved'):t('♡ सहेजें','♡ Save')}</button></div>
     </div>
     <p className="feedback" role="status">{feedback[message]}</p>
-    {language==='en'&&<p className="reader-language-note">Original prayer in Roman script. The wording is transliterated, not translated.</p>}
-    <article style={{fontSize:size}} className="verse-content" lang={language==='hi'?'hi':'hi-Latn'}>
+    <article style={{fontSize:size}} className="verse-content" lang="hi">
       {verified?sections.map((section,index)=>{
         const paired=layout==='paired'&&section.heading==='चौपाई';
-        return <section className={section.heading==='चौपाई'?'chaupai-section':'doha-section'} key={index}><h2>{sectionName(section.heading,language)}</h2><div className="verse-list">{section.verses.map((verse,verseIndex)=><p className={`verse${paired?' verse-paired':''}`} key={verseIndex}>{paired?verse.split('\n').map((line,lineIndex)=><span className="verse-half" key={lineIndex}>{line}</span>):verse}</p>)}</div></section>;
+        return <section className={section.heading==='चौपाई'?'chaupai-section':'doha-section'} key={index}><h2>{section.heading}</h2><div className="verse-list">{section.verses.map((verse,verseIndex)=><p className={`verse${paired?' verse-paired':''}`} key={verseIndex}>{paired?verse.split('\n').map((line,lineIndex)=><span className="verse-half" key={lineIndex}>{line}</span>):verse}</p>)}</div></section>;
       }):<div className="placeholder"><span className="placeholder-symbol" aria-hidden="true">❋</span><p className="eyebrow">{t('सावधानी से। श्रद्धा से।','WITH CARE. WITH REVERENCE.')}</p><h2>{t('प्रमाणित पाठ की प्रतीक्षा','Awaiting verified text')}</h2><p>{t('यह सामग्री का स्थानधारक है, चालीसा का पाठ नहीं।','This is a placeholder, not the Chalisa text.')}</p><p>{t('संपूर्ण पाठ विश्वसनीय स्रोत से सत्यापित होने के बाद यहाँ उपलब्ध होगा।','The complete text will be available after verification against trusted sources.')}</p></div>}
     </article>
   </section>;

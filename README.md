@@ -54,6 +54,6 @@ Dependencies are connected through a junction to E: because the C: drive had fil
 
 The header language selector switches the entire interface between Hindi and English. The choice is saved in `devpaath-language` in localStorage and retained across routes and reloads. Hindi is the static-export default.
 
-Prayers remain in their original language: Hindi mode shows the unchanged Devanagari text, while English mode shows an orthographic Roman transliteration with diacritics for long vowels and distinct consonants. This is not an English meaning or a phonetic pronunciation guide; inherent vowels are retained. Copy uses the displayed script. Navigation, descriptions, controls, status messages, image descriptions and browser titles use the selected interface language. Original content JSON, bookmarks, routes and canonical URLs remain unchanged.
+Prayers, section headings and copied devotional text always remain in their original Hindi (Devanagari) script in both modes. The language selector only translates the surrounding interface. Navigation, descriptions, controls, status messages, image descriptions and browser titles use the selected interface language. Original content JSON, bookmarks, routes and canonical URLs remain unchanged.
 
-Run `npm run test:language` to check transliteration coverage, line boundaries across all 430 verse blocks, and localized labels. Then run `npm run typecheck`, `npm run build` and `npm run verify`.
+Run `npm run test:language` to check that both interface languages render identical Hindi prayer content, preserve all 430 verse blocks, and copy the original Hindi text. Then run `npm run typecheck`, `npm run build` and `npm run verify`.
