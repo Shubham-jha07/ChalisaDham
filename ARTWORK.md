@@ -1,5 +1,13 @@
 # ChalisaDham original artwork
 
+## Devotional parchment background
+
+Asset: `public/images/devotional-parchment.webp`
+
+Original generated botanical artwork inspired by the general devotional stationery style of the supplied Pinterest reference: warm ivory parchment, lotus vines, small ivory flowers, sage foliage, antique-gold linework and peacock-feather corners. The reference image itself is not copied or hosted. The center remains quiet for readable content. The artwork is compressed to WebP, shared by the page surround and a darkened hero layer, and omitted when printing. The reading surface remains opaque and the Hindi prayer text is unchanged.
+
+Prompt direction: landscape original Indian devotional stationery background; delicate lotus vines at the outer margins; muted peacock feathers in upper corners; warm cream paper with subtle grain; coral, sage and antique gold; broad blank center; no text, logos, deity portraits or watermarks.
+
 Created using the built-in image generation tool. The original illustrations were resized and compressed to WebP for delivery; no third-party images are hotlinked. These are contemporary generated illustrations, not historical paintings or documentary images.
 
 ## Hanuman

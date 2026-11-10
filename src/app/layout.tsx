@@ -5,6 +5,7 @@ import './globals.css';
 import './motion.css';
 import './premium.css';
 import './reading.css';
+import './devotional.css';
 import SiteMotion from '@/components/SiteMotion';
 import {LanguageProvider,Text} from '@/components/Language';
 import './language.css';
