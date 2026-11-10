@@ -1,0 +1,47 @@
+/* Original lotus and peacock artwork frames the content like devotional stationery. */
+body {
+  position: relative;
+  isolation: isolate;
+  background: #fcf8ef;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(#fcf8ef26, #fcf8ef26),
+    url('/images/devotional-parchment.webp') center top / cover no-repeat;
+}
+.header { background: #fcf8eff2; }
+.hero {
+  width: min(1240px, calc(100% - 112px));
+  margin-top: 30px;
+  border-color: #b99a5c;
+}
+.hero::before {
+  background: linear-gradient(90deg, #17362ef5, #17362ee8),
+    url('/images/devotional-parchment.webp') center / cover no-repeat;
+}
+.belief-strip { background: #fcf8efdb; }
+.library, .recent {
+  background: #fcf8efed;
+  box-shadow: 0 0 0 18px #fcf8efed;
+  border-radius: 12px;
+}
+.notice { background: #fcf8efed; }
+.breadcrumb { background: #fcf8efed; border-radius: 10px; }
+/* The existing opaque reader surface keeps sacred text clear in both UI languages. */
+@media (max-width: 700px) {
+  body::before {
+    background-size: auto, 100% auto;
+    background-repeat: no-repeat, repeat-y;
+    opacity: .72;
+  }
+  .hero { width: calc(100% - 36px); margin-top: 18px; }
+  .library, .recent { box-shadow: 0 0 0 10px #fcf8efed; }
+}
+@media print {
+  body { background: white; }
+  body::before { display: none; }
+}
