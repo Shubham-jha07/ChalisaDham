@@ -7,7 +7,7 @@ The file contains two opening dohas, all forty chaupais and one closing doha. Tr
 - Chaupai 16: “तुम उपकार सुग्रीवहिं कीन्हा। राम मिलाय राज पद दीन्हा॥”
 - Closing doha: “पवन तनय संकट हरन, मंगल मूरति रूप।” replaces the malformed “मूरति मंगल्र मूर”.
 
-The remaining nine complete texts have now been added; see the collection review below. Content lives in `src/data/hanuman.json`; the structured entry in `src/data/chalisas.ts` makes the reader, copy/share controls, metadata and sitemap available for the reviewed text.
+The remaining nine complete texts have now been added; see the collection review below. Content lives in the `hanuman` entry in `src/data/chalisa-texts.json`; the structured entry in `src/data/chalisas.ts` makes the reader, copy/share controls, metadata and sitemap available for the reviewed text.
 
 
 # Complete collection review - 8 November 2026
