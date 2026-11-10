@@ -2,8 +2,10 @@
 
 import {useEffect, useState} from 'react';
 import {usePathname} from 'next/navigation';
+import {useLanguage} from './Language';
 
 export default function SiteMotion() {
+  const {t}=useLanguage();
   const pathname = usePathname();
   const [enabled, setEnabled] = useState(true);
   const [reduced, setReduced] = useState(false);
@@ -42,5 +44,5 @@ export default function SiteMotion() {
     try { localStorage.setItem('chalisadham-motion', next ? 'on' : 'off'); } catch {}
   }
 
-  return <button className="motion-toggle" onClick={toggle} aria-pressed={enabled && !reduced} disabled={reduced} title={reduced ? 'Your device prefers reduced motion' : 'Toggle site animations'}><span aria-hidden="true">{enabled && !reduced ? '◌' : 'Ⅱ'}</span>{enabled && !reduced ? 'Motion on' : 'Motion off'}</button>;
+  return <button className="motion-toggle" onClick={toggle} aria-pressed={enabled && !reduced} disabled={reduced} title={reduced ? t('आपके उपकरण में कम गति की प्राथमिकता है','Your device prefers reduced motion') : t('साइट की गति चालू या बंद करें','Toggle site animations')}><span aria-hidden="true">{enabled && !reduced ? '◌' : 'Ⅱ'}</span>{enabled && !reduced ? t('गति चालू','Motion on') : t('गति बंद','Motion off')}</button>;
 }

@@ -2,9 +2,12 @@
 
 import {useEffect, useRef, useState} from 'react';
 import Image from 'next/image';
+import {useLanguage} from './Language';
+import {contentName} from '@/lib/language';
 import type {Chalisa} from '@/data/chalisas';
 
 export default function DeityArtwork({item}:{item:Chalisa}) {
+  const {language,t}=useLanguage();
   const stage = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
   useEffect(() => {
@@ -40,9 +43,9 @@ export default function DeityArtwork({item}:{item:Chalisa}) {
     <div className="artwork-aura" aria-hidden="true"/>
     <div ref={stage} className="artwork-stage">
       <div className="artwork-float">
-        <Image src={`/images/${item.slug.replace('-chalisa','')}.webp`} alt={`${item.hindi} — पारंपरिक भारतीय शैली में चित्र`} width={960} height={1200} priority sizes="(max-width: 700px) 85vw, 420px" className="deity-image"/>
+        <Image src={`/images/${item.slug.replace('-chalisa','')}.webp`} alt={t(`${item.hindi} — पारंपरिक भारतीय शैली में चित्र`,`${contentName(item,language)} — traditional Indian-style illustration`)} width={960} height={1200} priority sizes="(max-width: 700px) 85vw, 420px" className="deity-image"/>
       </div>
     </div>
-    <figcaption><span className="cursor-hint">✦ Move your cursor • एक शांत अनुभव</span><button type="button" aria-pressed={paused} onClick={() => setPaused(v => !v)}>{paused ? '▶ गति चालू करें' : 'Ⅱ गति रोकें'}</button></figcaption>
+    <figcaption><span className="cursor-hint">{t("✦ कर्सर हिलाएँ • एक शांत अनुभव","✦ Move your cursor • A moment of calm")}</span><button type="button" aria-pressed={paused} onClick={() => setPaused(v => !v)}>{paused ? t('▶ गति चालू करें','▶ Resume motion') : t('Ⅱ गति रोकें','Ⅱ Pause motion')}</button></figcaption>
   </figure>;
 }

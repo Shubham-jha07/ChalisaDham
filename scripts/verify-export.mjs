@@ -28,7 +28,8 @@ for(const [slug,counts] of Object.entries(expected)){
  assert.equal((html.match(/class="verse(?: verse-paired)?"/g)||[]).length,verseCount,`${slug}: exported verse count`);
  const chaupais=data.sections.filter(s=>s.heading==='चौपाई').reduce((sum,s)=>sum+s.verses.length,0);
  assert.equal((html.match(/class="verse-half"/g)||[]).length,chaupais*2,`${slug}: paired halves lost or reordered`);
- assert(html.includes('Paired lines')&&html.includes('Stacked lines'),`${slug}: layout controls missing`);
+ assert(html.includes('साथ-साथ पंक्तियाँ')&&html.includes('ऊपर-नीचे पंक्तियाँ'),`${slug}: Hindi layout controls missing`);
+ assert(html.includes('lang="hi"')&&html.includes('English'),`${slug}: language selector or Hindi default missing`);
  assert(html.includes(`/images/${slug}.webp`),`${slug}: incorrect deity artwork`);
  assert(existsSync(`out/images/${slug}.webp`),`${slug}: artwork file missing`);
  assert(home.includes(route),`${slug}: homepage link missing`);

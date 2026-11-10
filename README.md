@@ -49,3 +49,11 @@ Original AI-generated illustrations are optimized to WebP in `public/images/`. A
 ### This workstation
 
 Dependencies are connected through a junction to E: because the C: drive had filled during setup. This machine may require the Windows native realpath helper in `work/` and `CHALISADHAM_JUNCTION_BUILD=1` when building with preserved symlinks. These are local environment accommodations. A clean checkout with `npm ci` on Cloudflare or another computer uses the ordinary `npm run build` command and default module resolution.
+
+## Hindi and English display
+
+The header language selector switches the entire interface between Hindi and English. The choice is saved in `devpaath-language` in localStorage and retained across routes and reloads. Hindi is the static-export default.
+
+Prayers remain in their original language: Hindi mode shows the unchanged Devanagari text, while English mode shows an orthographic Roman transliteration with diacritics for long vowels and distinct consonants. This is not an English meaning or a phonetic pronunciation guide; inherent vowels are retained. Copy uses the displayed script. Navigation, descriptions, controls, status messages, image descriptions and browser titles use the selected interface language. Original content JSON, bookmarks, routes and canonical URLs remain unchanged.
+
+Run `npm run test:language` to check transliteration coverage, line boundaries across all 430 verse blocks, and localized labels. Then run `npm run typecheck`, `npm run build` and `npm run verify`.
