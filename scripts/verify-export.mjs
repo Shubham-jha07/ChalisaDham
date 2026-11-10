@@ -2,7 +2,7 @@ import {readFileSync,existsSync} from 'node:fs';
 import assert from 'node:assert/strict';
 
 const readJson=path=>JSON.parse(readFileSync(path,'utf8'));
-const texts={hanuman:readJson('src/data/hanuman.json'),...readJson('src/data/chalisa-texts.json')};
+const texts=readJson('src/data/chalisa-texts.json');
 const expected={hanuman:[2,40,1],shiv:[1,41,2],ganesh:[1,38,2],durga:[41],ram:[46,2],krishna:[2,40,1],saraswati:[2,39,2],lakshmi:[1,1,39,2],shani:[2,40,1],vishnu:[1,40]};
 const home=readFileSync('out/index.html','utf8');
 const sitemap=readFileSync('out/sitemap.xml','utf8');
