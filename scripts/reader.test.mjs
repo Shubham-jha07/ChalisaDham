@@ -19,46 +19,40 @@ function loadTs(path, dependencies = {}) {
   }});
   return exports;
 }
-const language = loadTs('src/lib/language.ts');
+const pageContent = loadTs('src/data/page-content.ts');
+const content = loadTs('src/lib/content.ts', {'@/data/page-content': pageContent});
 const texts = JSON.parse(readFileSync('src/data/chalisa-texts.json', 'utf8'));
 const {chalisas} = loadTs('src/data/chalisas.ts', {'./chalisa-texts.json': texts});
-let selectedLanguage = 'hi';
 const {default: Reader} = loadTs('src/components/Reader.tsx', {
   react: React,
   'react/jsx-runtime': require('react/jsx-runtime'),
-  '@/lib/language': language,
-  './Language': {useLanguage: () => ({language: selectedLanguage, t: (hi, en) => selectedLanguage === 'hi' ? hi : en})},
+  '@/lib/content': content,
   './Library': {BOOKMARK_KEY: 'chalisadham-bookmarks', readBookmarks: () => []}
 });
-const renderReader = (item, locale) => {
-  selectedLanguage = locale;
-  return renderToStaticMarkup(React.createElement(Reader, {item}));
-};
+const renderReader = item => renderToStaticMarkup(React.createElement(Reader, {item}));
 
-test('both interface languages render identical original Hindi prayer articles on all ten pages', () => {
+test('Hinglish reader preserves all original Hindi prayer articles', () => {
   let count = 0;
   for (const item of chalisas) {
-    const hi = renderReader(item, 'hi');
-    const en = renderReader(item, 'en');
+    const html = renderReader(item);
     const article = html => html.match(/<article\b[\s\S]*?<\/article>/)?.[0];
-    assert(article(hi), `${item.slug}: missing prayer article`);
-    assert.equal(article(en), article(hi), `${item.slug}: language toggle changed the prayer`);
-    assert(article(en).includes('lang="hi"'));
-    assert(!/[A-Za-z]/.test(article(en).replace(/<[^>]+>/g, '')));
-    assert.equal((article(en).match(/class="verse(?: verse-paired)?"/g) || []).length, item.sections.reduce((n, section) => n + section.verses.length, 0));
+    assert(article(html), `${item.slug}: missing prayer article`);
+    assert(article(html).includes('lang="hi"'));
+    assert(!/[A-Za-z]/.test(article(html).replace(/<[^>]+>/g, '')));
+    assert.equal((article(html).match(/class="verse(?: verse-paired)?"/g) || []).length, item.sections.reduce((n, section) => n + section.verses.length, 0));
     for (const section of item.sections) for (const verse of section.verses) {
-      for (const line of verse.split('\n')) assert(article(en).includes(line), `${item.slug}: missing original line`);
+      for (const line of verse.split('\n')) assert(article(html).includes(line), `${item.slug}: missing original line`);
       count++;
     }
-    assert(hi.includes('कॉपी करें') && en.includes('Copy'), 'Controls must still translate');
-    assert(hi.includes('साथ-साथ पंक्तियाँ') && en.includes('Paired lines'));
+    assert(html.includes('Copy karein'), 'Hinglish copy control missing');
+    assert(html.includes('Saath-saath lines'));
   }
   assert.equal(count, 430);
 });
 
 test('copy content retains the Hindi title, headings, verses and their line breaks', () => {
   for (const item of chalisas) {
-    const text = language.prayerText(item);
+    const text = content.prayerText(item);
     assert(text.startsWith(item.hindi + '\n\n'));
     assert(!/[A-Za-z]/.test(text));
     for (const section of item.sections) {
@@ -68,9 +62,10 @@ test('copy content retains the Hindi title, headings, verses and their line brea
   }
 });
 
-test('surrounding navigation and descriptions still translate', () => {
-  assert.equal(language.categoryName('शिव परिवार', 'en'), 'Shiva family');
-  assert.equal(language.categoryName('शिव परिवार', 'hi'), 'शिव परिवार');
-  assert.equal(language.introduction(chalisas[0], 'hi'), texts.hanuman.intro);
-  assert(language.introduction(chalisas[0], 'en').startsWith('Read the complete Hanuman Chalisa'));
+test('catalog labels and descriptions use Roman-script Hinglish', () => {
+  assert.equal(content.categoryName('शिव परिवार'), 'Shiv Parivaar');
+  for (const item of chalisas) {
+    assert(!/[\u0900-\u097f]/u.test(content.contentName(item)));
+    assert(!/[\u0900-\u097f]/u.test(content.introduction(item)));
+  }
 });
