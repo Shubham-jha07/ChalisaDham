@@ -4,4 +4,4 @@ const entries=[['hanuman','Hanuman','हनुमान','विष्णु प
 const texts:Record<string,Pick<Chalisa,'intro'|'sections'|'sources'|'verifiedOn'>>=chalisaTexts;
 export const chalisas:Chalisa[]=entries.map(([slug,name,hindi,category,symbol,color])=>({slug:`${slug}-chalisa`,name:`${name} Chalisa`,hindi:`${hindi} चालीसा`,category,symbol,color,...texts[slug],status:'verified'}));
 export const categories=['सभी','शिव परिवार','विष्णु परिवार','शक्ति','नवग्रह'];
-export const siteUrl=(process.env.NEXT_PUBLIC_SITE_URL||'https://chalisadham.example').replace(/\/$/,'');
+export const siteUrl=(process.env.NEXT_PUBLIC_SITE_URL||'https://devpaath.com').replace(/\/$/,'');

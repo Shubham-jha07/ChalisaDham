@@ -30,14 +30,14 @@ Content is separate from UI: `src/data/chalisa-texts.json`, and the catalog in `
 2. Connect the repository in Cloudflare Pages and select the production branch.
 3. Select Next.js (Static HTML Export) or None as the framework preset.
 4. Build command: `npm run build`. Output directory: `out`. Root: the folder containing `package.json`.
-5. Set `NODE_VERSION=22` and `NEXT_PUBLIC_SITE_URL=https://YOUR-DOMAIN` before the build. The default `.example` domain is deliberately a placeholder. Domain changes require a rebuild for canonical URLs, sitemap and robots.
+5. Set `NODE_VERSION=22` and `NEXT_PUBLIC_SITE_URL=https://devpaath.com` before the build. The default public origin is https://devpaath.com. Domain changes require a rebuild for canonical URLs, sitemap and robots.
 6. Check `/`, a direct `/chalisa/hanuman-chalisa/` URL, `/sitemap.xml`, `/robots.txt`, and an unknown URL. Cloudflare should serve `404.html` for missing routes. Do not add an SPA fallback rewrite.
 
 `public/_headers` includes security headers and immutable caching for hashed assets. No secrets are required. GitHub repository creation and Cloudflare publication are not performed automatically.
 
 ## Accessibility and verification
 
-Semantic headings, Hindi page language, labeled controls, live status messages, keyboard focus, skip link, mobile layouts and reduced-motion support. System Devanagari fonts (Nirmala UI/Mangal fallback) avoid external font requests. Hero artwork combines original optimized paintings and CSS ornamentation. Export verification checks every complete edition, verse and paired-half counts, canonical metadata, homepage links, sitemap entries and deployment files. Browser interactions and screen reader review should be checked before public launch.
+Semantic headings, Roman-script Hinglish interface with Hindi prayer articles, labeled controls, live status messages, keyboard focus, skip link, mobile layouts and reduced-motion support. System Devanagari fonts (Nirmala UI/Mangal fallback) avoid external font requests. Hero artwork combines original optimized paintings and CSS ornamentation. Export verification checks every complete edition, verse and paired-half counts, canonical metadata, homepage links, sitemap entries and deployment files. Browser interactions and screen reader review should be checked before public launch.
 
 
 ## Animated devotional experience
@@ -50,10 +50,14 @@ Original AI-generated illustrations are optimized to WebP in `public/images/`. A
 
 Dependencies are connected through a junction to E: because the C: drive had filled during setup. This machine may require the Windows native realpath helper in `work/` and `CHALISADHAM_JUNCTION_BUILD=1` when building with preserved symlinks. These are local environment accommodations. A clean checkout with `npm ci` on Cloudflare or another computer uses the ordinary `npm run build` command and default module resolution.
 
-## Hindi and English display
+## Hinglish interface and Hindi prayers
 
-The header language selector switches the entire interface between Hindi and English. The choice is saved in `devpaath-language` in localStorage and retained across routes and reloads. Hindi is the static-export default.
+Navigation, page introductions, controls and status messages use Roman-script Hinglish. Chalisa verses, section headings and copied devotional text use the original Hindi script. There is one interface with no language selector or saved language preference. Search accepts Hindi and Roman-script names.
 
-Prayers, section headings and copied devotional text always remain in their original Hindi (Devanagari) script in both modes. The language selector only translates the surrounding interface. Navigation, descriptions, controls, status messages, image descriptions and browser titles use the selected interface language. Original content JSON, bookmarks, routes and canonical URLs remain unchanged.
+Run `npm run test:reader` to verify the reader and all 430 original verse blocks, then `npm run typecheck`, `npm run build` and `npm run verify`.
 
-Run `npm run test:language` to check that both interface languages render identical Hindi prayer content, preserve all 430 verse blocks, and copy the original Hindi text. Then run `npm run typecheck`, `npm run build` and `npm run verify`.
+## Search descriptions and page context
+
+Original Hinglish descriptions, introductions and reader context live in `src/data/page-content.ts`. The research and references are documented in [SEO-RESEARCH.md](SEO-RESEARCH.md). Prayer text remains in `src/data/chalisa-texts.json`. Shared headings, social previews and JSON-LD are built in `src/lib/seo.ts`.
+
+After changing copy, run `npm run typecheck`, `npm run test:reader`, `npm run build`, and `npm run verify`. Verification includes the initial exported HTML for all eleven indexable pages. Metadata changes require a rebuild and deployment before search engines can see them.
